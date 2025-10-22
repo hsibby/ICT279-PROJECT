@@ -46,39 +46,36 @@ This project includes an automated script to install Apache HTTPD 2.4.59 from so
 - **Document root:** `/usr/local/apache2/htdocs/`
 - **Start/Stop Apache:** `/usr/local/apache2/bin/apachectl {start|stop|restart}`
 
-#### CVE-2024-38475 Vulnerability Demonstration
-This project includes a complete demonstration of **CVE-2024-38475**, a critical vulnerability in Apache mod_rewrite:
 
-- **`vulnerable-httpd-2.4.59.conf`** - Vulnerable Apache configuration
-- **`cve-2024-38475-demo.sh`** - Vulnerability demonstration script  
-- **`test-cve-2024-38475.sh`** - Automated vulnerability testing
-- **`cve-2024-38475-poc.py`** - **Python PoC script for automated testing**
-- **`poc-examples.py`** - Interactive examples for using the Python PoC
-- **`requirements.txt`** - Python dependencies
-- **`CVE-2024-38475-README.md`** - Detailed vulnerability documentation
+#### Setup the httpd.conf file
 
-**Python PoC Usage:**
+Add the and enable the following lines to the httpd.conf file
+
 ```bash
-# Install dependencies
-pip3 install -r requirements.txt
+LoadModule rewrite_module modules/mod_rewrite.so
 
-# Basic test
-python3 cve-2024-38475-poc.py -u http://localhost
+DocumentRoot "/usr/local/apache2/htdocs"
+<Directory "/usr/local/apache2/htdocs">
+    AllowOverride None
+    Require all granted
+</Directory>
 
-# Verbose output with custom files
-python3 cve-2024-38475-poc.py -u http://localhost -v -f etc/passwd,etc/shadow
+# Hidden directories allowed but not mapped
+<Directory "/opt/lab/hidden">
+    Require all granted
+</Directory>
 
-# Generate detailed report
-python3 cve-2024-38475-poc.py -u http://localhost -o report.txt
-
-# Interactive examples
-python3 poc-examples.py
+RewriteEngine On
+# VULNERABLE RULE 1: Using backreference as first segment
+RewriteRule ^/(.+)/foo\.txt$ /$1/bar.txt [L]
 ```
 
-**⚠️ WARNING**: The vulnerability files are for educational purposes only. Never use in production!
+#### Create the test files
+```bash
+sudo mkdir -p /opt/lab/hidden
+echo "FLAG" | sudo tee /opt/lab/hidden/bar.txt
+```
 
-#### Troubleshooting
-- Ensure you have sudo privileges
-- Check that port 80 is not being used by another service
-- Review the script output for any error messages
-- Check Apache logs: `/usr/local/apache2/logs/error_log`
+
+#### Via attacker machine
+Run poc.py 

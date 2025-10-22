@@ -1,2 +1,0 @@
-sudo mkdir -p /opt/lab/hidden
-echo "FLAG" | sudo tee /opt/lab/hidden/bar.txt
