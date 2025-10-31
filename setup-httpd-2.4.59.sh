@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Simple Apache HTTPD 2.4.59 setup from source
+# Apache HTTPD 2.4.59 setup from source
 # Usage: sudo bash setup-httpd-2.4.59.sh
 
 set -e
